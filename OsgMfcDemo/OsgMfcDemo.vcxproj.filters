@@ -39,6 +39,45 @@
     <ClInclude Include="OsgManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MFC_OSG.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="OsgWindow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="OsgScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="OsgFileSource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="OsgSceneCollection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="OsgWindowCollection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSourceDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenesDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GroupSize.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLayersDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="D3WindowsDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="D3WindowDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OsgMfcDemo.cpp">
@@ -54,6 +93,42 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OsgManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MFC_OSG.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OsgWindow.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OsgScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OsgFileSource.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OsgSceneCollection.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OsgWindowCollection.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ICollection.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSourceDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenesDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLayersDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="D3WindowsDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="D3WindowDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

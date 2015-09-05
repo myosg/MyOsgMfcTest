@@ -4,6 +4,10 @@
 
 #pragma once
 #include "OsgManager.h"
+#include "FileSourceDlg.h"
+#include "ScenesDlg.h"
+#include "SceneLayersDlg.h"
+#include "D3WindowsDlg.h"
 
 
 // COsgMfcDemoDlg 对话框
@@ -21,6 +25,13 @@ public:
 
 private:
 	COsgManager m_osgManager;
+	CFileSourceDlg m_fileSourceDlg;
+	CScenesDlg m_scenesDlg;
+	CSceneLayersDlg m_sceneLayersDlg;
+	CD3WindowsDlg m_d3WindowsDlg;
+
+	int m_leftWidth;
+
 // 实现
 protected:
 	HICON m_hIcon;
@@ -35,4 +46,8 @@ public:
 	afx_msg void OnEditRect3d();
 	afx_msg void OnOpen();
 	afx_msg void OnImport();
+	afx_msg void OnSizing(UINT fwSide, LPRECT pRect);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+private:
+	void UpdatePosition();
 };

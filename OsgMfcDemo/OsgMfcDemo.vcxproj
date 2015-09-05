@@ -59,7 +59,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\OSG\OpenSceneGraph\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\OSG\OpenSceneGraph\lib;D:\OSG\3rdParty\x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>osgViewerd.lib;osgTextd.lib;opengl32.lib;osgGAd.lib;osgDBd.lib;zlibd.lib;osgUtild.lib;osgd.lib;OpenThreadsd.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -103,19 +104,44 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D3WindowDlg.h" />
+    <ClInclude Include="D3WindowsDlg.h" />
+    <ClInclude Include="FileSourceDlg.h" />
+    <ClInclude Include="GroupSize.h" />
+    <ClInclude Include="ICollection.h" />
+    <ClInclude Include="MFC_OSG.h" />
     <ClInclude Include="OsgFile.h" />
+    <ClInclude Include="OsgFileSource.h" />
     <ClInclude Include="OsgManager.h" />
+    <ClInclude Include="OsgScene.h" />
     <ClInclude Include="OsgMfcDemo.h" />
     <ClInclude Include="OsgMfcDemoDlg.h" />
+    <ClInclude Include="OsgSceneCollection.h" />
+    <ClInclude Include="OsgWindow.h" />
+    <ClInclude Include="OsgWindowCollection.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SceneLayersDlg.h" />
+    <ClInclude Include="ScenesDlg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="D3WindowDlg.cpp" />
+    <ClCompile Include="D3WindowsDlg.cpp" />
+    <ClCompile Include="FileSourceDlg.cpp" />
+    <ClCompile Include="ICollection.cpp" />
+    <ClCompile Include="MFC_OSG.cpp" />
     <ClCompile Include="OsgFile.cpp" />
+    <ClCompile Include="OsgFileSource.cpp" />
     <ClCompile Include="OsgManager.cpp" />
+    <ClCompile Include="OsgScene.cpp" />
     <ClCompile Include="OsgMfcDemo.cpp" />
     <ClCompile Include="OsgMfcDemoDlg.cpp" />
+    <ClCompile Include="OsgSceneCollection.cpp" />
+    <ClCompile Include="OsgWindow.cpp" />
+    <ClCompile Include="OsgWindowCollection.cpp" />
+    <ClCompile Include="SceneLayersDlg.cpp" />
+    <ClCompile Include="ScenesDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
