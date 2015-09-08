@@ -15,10 +15,13 @@ IMPLEMENT_DYNAMIC(CD3WindowsDlg, CDialogEx)
 CD3WindowsDlg::CD3WindowsDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CD3WindowsDlg::IDD, pParent)
 {
+	m_osgManager=NULL;
+	m_selectD3WindowDlg=NULL;
 }
 
 CD3WindowsDlg::~CD3WindowsDlg()
 {
+	CloseAllD3Window();
 }
 
 void CD3WindowsDlg::DoDataExchange(CDataExchange* pDX)
@@ -65,64 +68,69 @@ void CD3WindowsDlg::OnShowWindow(BOOL bShow, UINT nStatus)
 	CDialogEx::OnShowWindow(bShow, nStatus);
 
 	// TODO: 在此处添加消息处理程序代码
-	OpenOrGetD3Window(_T("测试窗口1"));
-	OpenOrGetD3Window(_T("测试窗口2"));
 }
 
-CD3WindowDlg* CD3WindowsDlg::OpenOrGetD3Window( CString sceneName )
+CD3WindowDlg* CD3WindowsDlg::OpenOrGetD3Window( COsgScene* scene)
 {
-	CD3WindowDlg*p=GetD3Window(sceneName);
+	CD3WindowDlg*p=GetD3Window(scene);
 	if (p)
 	{
 		return p;
 	}
-	return OpenNewD3Window(sceneName);
+	return OpenNewD3Window(scene);
 }
 
-void CD3WindowsDlg::CloseD3Window( CString sceneName )
+void CD3WindowsDlg::CloseD3Window( COsgScene* scene )
 {
 	int i=-1;
 	for (list<CD3WindowDlg*>::iterator it=m_d3WindowList.begin();it!=m_d3WindowList.end();it++)
 	{
 		CD3WindowDlg*p=*it;
 		i++;
-		if (p->D3WindowName().Compare(sceneName)==0)
+		if (p->OsgScene()==scene)
 		{
 			m_tab3DWinCtrl.DeleteItem(i);
 			m_d3WindowList.erase(it);
 			delete p;
+			m_osgManager->SceneLayersDlg()->Refresh();
 			return;
 		}
 	}
 }
 
-CD3WindowDlg* CD3WindowsDlg::OpenNewD3Window( CString sceneName )
+CD3WindowDlg* CD3WindowsDlg::OpenNewD3Window( COsgScene* scene )
 {
 	if (m_tab3DWinCtrl.GetSafeHwnd())
 	{
 		CD3WindowDlg*p=new CD3WindowDlg();
-		p->D3WindowName(sceneName);
+		p->OsgScene(scene);
 		p->Create(IDD_3D_WINDOW,&m_tab3DWinCtrl);
 		int index=m_d3WindowList.size();
-		m_tab3DWinCtrl.InsertItem(index,sceneName);
+		m_tab3DWinCtrl.InsertItem(index,scene->Name());
 		m_d3WindowList.push_back(p);
 		m_tab3DWinCtrl.SetCurSel(index);
 		UpdateView();
+		m_osgManager->SceneLayersDlg()->Refresh();
 		return p;
 	}
 	return NULL;
 }
 
-CD3WindowDlg* CD3WindowsDlg::GetD3Window( CString sceneName )
+CD3WindowDlg* CD3WindowsDlg::GetD3Window( COsgScene* scene)
 {
 	int i=-1;
 	for (list<CD3WindowDlg*>::iterator it=m_d3WindowList.begin();it!=m_d3WindowList.end();it++)
 	{
 		CD3WindowDlg*p=*it;
 		i++;
-		if (p->D3WindowName().Compare(sceneName)==0)
+		if (p->OsgScene()==scene)
 		{
+			int sel=m_tab3DWinCtrl.GetCurSel();
 			m_tab3DWinCtrl.SetCurSel(i);
+			if (i!=sel)
+			{
+				m_osgManager->SceneLayersDlg()->Refresh();
+			}
 			return p;
 		}
 	}
@@ -135,6 +143,7 @@ void CD3WindowsDlg::OnTcnSelchangeTab3dwins(NMHDR *pNMHDR, LRESULT *pResult)
 	// TODO: 在此添加控件通知处理程序代码
 	*pResult = 0;
 	 UpdateView();
+	 m_osgManager->SceneLayersDlg()->Refresh();
 }
 
 void CD3WindowsDlg::UpdateView()
@@ -159,6 +168,7 @@ void CD3WindowsDlg::UpdateView()
 			rect.left+=1; 
 			rect.right-=3; 
 			p->MoveWindow(&rect);
+			m_selectD3WindowDlg=p;
 		}
 		else
 		{
@@ -166,5 +176,32 @@ void CD3WindowsDlg::UpdateView()
 		}
 	}
 }
+
+void CD3WindowsDlg::CloseAllD3Window()
+{
+	list<CD3WindowDlg*>::iterator it=m_d3WindowList.begin();
+	while (it!=m_d3WindowList.end())
+	{
+		CD3WindowDlg*p=*it;
+		it = m_d3WindowList.erase(it);
+		delete p;
+	}
+	if (m_tab3DWinCtrl.GetSafeHwnd())
+	{
+		m_tab3DWinCtrl.DeleteAllItems();
+	}
+}
+
+void CD3WindowsDlg::BindingOsgManager( COsgManager* manager )
+{
+	m_osgManager=manager;
+}
+
+void CD3WindowsDlg::Refresh()
+{
+
+}
+
+
 
 

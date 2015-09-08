@@ -15,7 +15,7 @@ IMPLEMENT_DYNAMIC(CSceneLayersDlg, CDialogEx)
 CSceneLayersDlg::CSceneLayersDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CSceneLayersDlg::IDD, pParent)
 {
-
+	m_osgManager=NULL;
 }
 
 CSceneLayersDlg::~CSceneLayersDlg()
@@ -42,4 +42,22 @@ void CSceneLayersDlg::OnSize(UINT nType, int cx, int cy)
 
 	// TODO: 在此处添加消息处理程序代码
 	GROUPSIZE(IDC_STA_GSRC,IDC_TREE_LAYERS);
+}
+
+void CSceneLayersDlg::BindingOsgManager( COsgManager* manager )
+{
+	m_osgManager=manager;
+}
+
+void CSceneLayersDlg::Refresh()
+{
+	CD3WindowDlg* d3windowdlg=m_osgManager->D3WindowsDlg()->SelectD3WindowDlg();
+	if (d3windowdlg)
+	{
+		COsgScene* scene = d3windowdlg->OsgScene();
+	}
+	else
+	{
+
+	}
 }

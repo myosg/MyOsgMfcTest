@@ -10,5 +10,6 @@ public:
 	COsgFileSource(void);
 	~COsgFileSource(void);
 public:
+	BOOL Contains(CString fileName);
 };
 

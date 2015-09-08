@@ -17,13 +17,14 @@ public:
 public:
 	void virtual Add(T*item);//添加对象
 	void virtual Remove(T*item);//移除对象
+	BOOL virtual Contains(T*item);//是否包含对象
 	BOOL virtual Swap(T*item1,T*item2);//交换对象顺序
 	void virtual Clear();//清空集合
 	void virtual Delete(T*item);//移除集合对象，并回收（使用delete）
 	void virtual DeleteAll();//移除所有对象，并回收（使用delete）
 	list<T*> Collection() const;//获取集合对象
 	int Count() const;//集合个数
-	T*Get(int index=0) const;//取得指定位置对象
+	T*Get(int index=0);//取得指定位置对象
 	T*operator[](int index) const;
 	BOOL OnDestoryItems() const;//获取是否析构时删除对象
 	void OnDestoryItems(BOOL val);//设置是否删除时删除对象
@@ -33,6 +34,22 @@ public:
 	ClearEventHandle Cleared; 
 	SwapEventHandle Swaped;
 };
+
+template <class T>
+BOOL ICollection<T>::Contains( T*item )
+{
+	list<T*>::iterator it=m_List.begin();
+	while (it!=m_List.end())
+	{
+		T*t=*it;
+		if (t==item)
+		{
+			return TRUE;
+		}
+		it++;
+	}
+	return FALSE;
+}
 
 template <class T>
 int ICollection<T>::Count() const
@@ -47,9 +64,21 @@ T* ICollection<T>::operator[]( const int index ) const
 }
 
 template <class T>
-T* ICollection<T>::Get( int index/*=0*/ ) const
+T* ICollection<T>::Get( int index/*=0*/ )
 {
-	return m_List[i]
+	std::list<T*>::iterator it=m_List.begin();
+	int i=0;
+	while (it!=m_List.end())
+	{
+		if (i==index)
+		{
+			T* t=*it;
+			return t;
+		}
+		it++;
+		i++;
+	}
+	return NULL;
 }
 
 template <class T>
@@ -218,9 +247,8 @@ void ICollection<T>::DeleteAll()
 	while (it!=m_List.end())
 	{
 		T*t=*it;
-		m_List.erase(it);
+		it=m_List.erase(it);
 		delete t;
-		it=m_List.begin();
 	}
 	if (Cleared!=NULL)
 	{

@@ -14,7 +14,7 @@ IMPLEMENT_DYNAMIC(CD3WindowDlg, CDialogEx)
 CD3WindowDlg::CD3WindowDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CD3WindowDlg::IDD, pParent)
 {
-
+	this->SetBackgroundColor(RGB(255,255,255));
 }
 
 CD3WindowDlg::~CD3WindowDlg()

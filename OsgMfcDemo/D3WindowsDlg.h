@@ -2,10 +2,12 @@
 #include "afxcmn.h"
 #include <list>
 #include "D3WindowDlg.h"
+#include "OsgScene.h"
+#include "OsgManager.h"
 using namespace std;
 
 // CD3WindowsDlg ¶Ô»°¿ò
-
+extern class COsgManager;
 class CD3WindowsDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(CD3WindowsDlg)
@@ -24,17 +26,24 @@ protected:
 
 private:
 	list<CD3WindowDlg*> m_d3WindowList;
+	COsgManager* m_osgManager;
+	CD3WindowDlg*m_selectD3WindowDlg;
+public:
+	CD3WindowDlg* SelectD3WindowDlg() const { return m_selectD3WindowDlg; }
+	void SelectD3WindowDlg(CD3WindowDlg* val) { m_selectD3WindowDlg = val; }
 
+	CD3WindowDlg*OpenOrGetD3Window(COsgScene* scene);
+	CD3WindowDlg*OpenNewD3Window(COsgScene* scene);
+	CD3WindowDlg*GetD3Window(COsgScene* scene);
+	void CloseD3Window(COsgScene* scene);
+	void CloseAllD3Window();
+	void UpdateView();
+	void BindingOsgManager(COsgManager* manager);
+	void Refresh();
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	CTabCtrl m_tab3DWinCtrl;
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
-public:
-	CD3WindowDlg*OpenOrGetD3Window(CString sceneName);
-	CD3WindowDlg*OpenNewD3Window(CString sceneName);
-	CD3WindowDlg*GetD3Window(CString sceneName);
-	void CloseD3Window(CString sceneName);
 	afx_msg void OnTcnSelchangeTab3dwins(NMHDR *pNMHDR, LRESULT *pResult);
-	void UpdateView();
 };

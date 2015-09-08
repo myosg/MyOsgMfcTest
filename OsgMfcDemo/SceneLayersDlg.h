@@ -1,8 +1,10 @@
 #pragma once
+#include "OsgScene.h"
+#include "OsgManager.h"
 
 
 // CSceneLayersDlg 对话框
-
+extern class COsgManager;
 class CSceneLayersDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(CSceneLayersDlg)
@@ -18,6 +20,11 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+private:
+	COsgManager*m_osgManager;
+public:
+	void BindingOsgManager(COsgManager* manager);
+	void Refresh();
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 };

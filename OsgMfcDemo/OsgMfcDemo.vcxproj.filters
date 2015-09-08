@@ -42,9 +42,6 @@
     <ClInclude Include="MFC_OSG.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="OsgWindow.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="OsgScene.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -52,9 +49,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="OsgSceneCollection.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="OsgWindowCollection.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ICollection.h">
@@ -98,9 +92,6 @@
     <ClCompile Include="MFC_OSG.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="OsgWindow.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="OsgScene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -108,9 +99,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OsgSceneCollection.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="OsgWindowCollection.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ICollection.cpp">

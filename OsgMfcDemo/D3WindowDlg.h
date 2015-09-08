@@ -1,4 +1,5 @@
 #pragma once
+#include "OsgScene.h"
 
 
 // CD3WindowDlg ¶Ô»°¿ò
@@ -19,8 +20,8 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 private:
-	CString m_d3WindowName;
+	COsgScene* m_osgScene;
 public:
-	CString D3WindowName() const { return m_d3WindowName; }
-	void D3WindowName(CString val) { m_d3WindowName = val; }
+	COsgScene* OsgScene() const { return m_osgScene; }
+	void OsgScene(COsgScene* val) { m_osgScene = val; }
 };

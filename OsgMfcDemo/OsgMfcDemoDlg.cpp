@@ -107,14 +107,11 @@ BOOL COsgMfcDemoDlg::OnInitDialog()
     // TODO: 在此添加额外的初始化代码
 	m_leftWidth=250;
 
-
-    COsgWindow *osgWindow=new COsgWindow(this->GetSafeHwnd());
-    m_osgManager.WindowCollection()->Add(osgWindow);
-
-
 	m_fileSourceDlg.Create(IDD_PANEL_SOURCE,this);
 	m_fileSourceDlg.ShowWindow(SW_SHOW);
 
+	m_d3WindowsDlg.Create(IDD_3D_WINS,this);
+	m_d3WindowsDlg.ShowWindow(SW_SHOW);
 
 	m_scenesDlg.Create(IDD_PANEL_SCENES,this);
 	m_scenesDlg.ShowWindow(SW_SHOW);
@@ -122,8 +119,15 @@ BOOL COsgMfcDemoDlg::OnInitDialog()
 	m_sceneLayersDlg.Create(IDD_PANEL_LAYERS,this);
 	m_sceneLayersDlg.ShowWindow(SW_SHOW);
 
-	m_d3WindowsDlg.Create(IDD_3D_WINS,this);
-	m_d3WindowsDlg.ShowWindow(SW_SHOW);
+	m_osgManager.FileSourceDlg(&m_fileSourceDlg);
+	m_osgManager.ScenesDlg(&m_scenesDlg);
+	m_osgManager.D3WindowsDlg(&m_d3WindowsDlg);
+	m_osgManager.SceneLayersDlg(&m_sceneLayersDlg);
+
+	m_fileSourceDlg.BindingOsgManager(&m_osgManager);
+	m_scenesDlg.BindingOsgManager(&m_osgManager);
+	m_d3WindowsDlg.BindingOsgManager(&m_osgManager);
+	m_sceneLayersDlg.BindingOsgManager(&m_osgManager);
 
 	UpdatePosition();
 
@@ -184,8 +188,14 @@ void COsgMfcDemoDlg::OnOpen()
     if(dialog.DoModal()==IDOK)
     {
         CString fileName=dialog.GetPathName();
+		if (m_osgManager.FileSource()->Contains(fileName))
+		{
+			MessageBox(_T("已存在该文件！"));
+			return;
+		}
         COsgFile *osg=new COsgFile(fileName);
         m_osgManager.FileSource()->Add(osg);
+		m_fileSourceDlg.Refresh();
     }
 }
 //导入
