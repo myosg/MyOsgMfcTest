@@ -72,6 +72,9 @@
     <ClInclude Include="D3WindowDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="OsgSceneFile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OsgMfcDemo.cpp">
@@ -117,6 +120,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="D3WindowDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OsgSceneFile.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

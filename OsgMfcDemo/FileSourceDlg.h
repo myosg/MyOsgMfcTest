@@ -33,4 +33,7 @@ public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	CTreeCtrl m_treeSource;
 	afx_msg void OnTvnBegindragTreeSource(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnAddCurScene();
+	afx_msg void OnAddNewScene();
+	afx_msg void OnNMRClickTreeSource(NMHDR *pNMHDR, LRESULT *pResult);
 };

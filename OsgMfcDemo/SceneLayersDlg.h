@@ -1,6 +1,7 @@
 #pragma once
 #include "OsgScene.h"
 #include "OsgManager.h"
+#include "afxcmn.h"
 
 
 // CSceneLayersDlg ¶Ô»°¿ò
@@ -27,4 +28,5 @@ public:
 	void Refresh();
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	CTreeCtrl m_treeLayers;
 };

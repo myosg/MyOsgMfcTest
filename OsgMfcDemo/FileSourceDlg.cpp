@@ -34,6 +34,9 @@ BEGIN_MESSAGE_MAP(CFileSourceDlg, CDialogEx)
 	ON_WM_SIZING()
 	ON_WM_CREATE()
 	ON_NOTIFY(TVN_BEGINDRAG, IDC_TREE_SOURCE, &CFileSourceDlg::OnTvnBegindragTreeSource)
+	ON_COMMAND(ID_ADD_CUR_SCENE, &CFileSourceDlg::OnAddCurScene)
+	ON_COMMAND(ID_ADD_NEW_SCENE, &CFileSourceDlg::OnAddNewScene)
+	ON_NOTIFY(NM_RCLICK, IDC_TREE_SOURCE, &CFileSourceDlg::OnNMRClickTreeSource)
 END_MESSAGE_MAP()
 
 // CFileSourceDlg 消息处理程序
@@ -120,7 +123,7 @@ void CFileSourceDlg::Refresh()
 			{
 				continue;
 			}
-			HTREEITEM hChild=m_treeSource.InsertItem(file->FilePathName(),hroot); 
+			HTREEITEM hChild=m_treeSource.InsertItem(file->FileName(),hroot); 
 			m_treeSource.SetItemData(hChild,(DWORD_PTR)file);
 			m_treeSource.SelectItem(hChild);
 		}
@@ -141,4 +144,67 @@ void CFileSourceDlg::OnTvnBegindragTreeSource(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 // 	COleDataSource data;
 // 	data.DoDragDrop();
+}
+
+//添加到当前场景
+void CFileSourceDlg::OnAddCurScene()
+{
+	// TODO: 在此添加命令处理程序代码
+	CD3WindowDlg* dlg=m_osgManager->D3WindowsDlg()->SelectD3WindowDlg();
+	if (dlg==NULL)
+	{
+		return;
+	}
+	else
+	{
+		HTREEITEM hItem =m_treeSource.GetSelectedItem();
+		if (hItem!=NULL)
+		{
+			COsgFile* osgFile = (COsgFile*)m_treeSource.GetItemData(hItem);
+			COsgSceneFile* sceneFile=new COsgSceneFile(osgFile);
+			dlg->OsgScene()->AddOsgSceneFile(sceneFile);
+			m_osgManager->SceneLayersDlg()->Refresh();
+			dlg->InitOsg();
+		}
+	}
+}
+
+
+void CFileSourceDlg::OnAddNewScene()
+{
+	// TODO: 在此添加命令处理程序代码
+	COsgScene*osgScene=new COsgScene(TRUE);
+	m_osgManager->SceneCollection()->Add(osgScene);
+	m_osgManager->ScenesDlg()->Refresh();
+	m_osgManager->D3WindowsDlg()->OpenNewD3Window(osgScene);
+	OnAddCurScene();
+}
+
+
+void CFileSourceDlg::OnNMRClickTreeSource(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	*pResult = 0;
+	CPoint p;
+	GetCursorPos(&p);
+	m_treeSource.ScreenToClient(&p);  
+
+	CMenu m_Menu;  
+	m_Menu.LoadMenu(IDR_MENU_SOURCE);  
+	CMenu *m_SubMenu = m_Menu.GetSubMenu(0);  
+
+	UINT uFlags;  
+	HTREEITEM hItem = m_treeSource.HitTest(p,&uFlags);  
+	HTREEITEM hRoot=m_treeSource.GetRootItem();
+	if (hItem != NULL) 
+	{  
+		m_treeSource.Select(hItem, TVGN_CARET);
+	}
+	if (hItem==hRoot||hItem==NULL)
+	{
+		m_SubMenu->EnableMenuItem(ID_ADD_CUR_SCENE,MF_DISABLED);
+		m_SubMenu->EnableMenuItem(ID_ADD_NEW_SCENE,MF_DISABLED);
+	}
+	m_treeSource.ClientToScreen(&p);
+	m_SubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, p.x, p.y, this); 
 }

@@ -143,12 +143,13 @@ void CScenesDlg::OnNMRClickTreeScene(NMHDR *pNMHDR, LRESULT *pResult)
 	CMenu *m_SubMenu = m_Menu.GetSubMenu(0);  
 
  	UINT uFlags;  
-    HTREEITEM hItem = m_treeScenes.HitTest(p,&uFlags);  
-	if ((hItem != NULL) && (TVHT_ONITEM & uFlags)) 
+    HTREEITEM hItem = m_treeScenes.HitTest(p,&uFlags); 
+	HTREEITEM hRoot=m_treeScenes.GetRootItem();
+	if (hItem != NULL) 
 	{  
 		m_treeScenes.Select(hItem, TVGN_CARET);
 	}
-	else
+	if (hItem==hRoot||hItem==NULL)
 	{
 		m_SubMenu->EnableMenuItem(ID_SCENE_OPEN,MF_DISABLED);
 		m_SubMenu->EnableMenuItem(ID_SCENE_DELETE,MF_DISABLED);

@@ -117,6 +117,7 @@
     <ClInclude Include="OsgMfcDemo.h" />
     <ClInclude Include="OsgMfcDemoDlg.h" />
     <ClInclude Include="OsgSceneCollection.h" />
+    <ClInclude Include="OsgSceneFile.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SceneLayersDlg.h" />
     <ClInclude Include="ScenesDlg.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="OsgMfcDemo.cpp" />
     <ClCompile Include="OsgMfcDemoDlg.cpp" />
     <ClCompile Include="OsgSceneCollection.cpp" />
+    <ClCompile Include="OsgSceneFile.cpp" />
     <ClCompile Include="SceneLayersDlg.cpp" />
     <ClCompile Include="ScenesDlg.cpp" />
     <ClCompile Include="stdafx.cpp">

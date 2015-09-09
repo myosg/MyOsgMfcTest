@@ -25,6 +25,7 @@ CSceneLayersDlg::~CSceneLayersDlg()
 void CSceneLayersDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_TREE_LAYERS, m_treeLayers);
 }
 
 
@@ -55,9 +56,34 @@ void CSceneLayersDlg::Refresh()
 	if (d3windowdlg)
 	{
 		COsgScene* scene = d3windowdlg->OsgScene();
+		list<COsgSceneFile*>* files = scene->OsgSceneFileList();
+		HTREEITEM hRoot=m_treeLayers.GetRootItem();
+		if (hRoot==NULL)
+		{
+			hRoot=m_treeLayers.InsertItem(_T("场景图层"));
+		}
+		if(m_treeLayers.ItemHasChildren(hRoot))
+		{
+			//获得孩子节点  
+			HTREEITEM hChild=m_treeLayers.GetChildItem(hRoot);  
+			//遍历hRoot下一层的所有孩子节点，然后删除
+			while(hChild)  
+			{  
+				COsgSceneFile* file=(COsgSceneFile*)m_treeLayers.GetItemData(hChild);
+				HTREEITEM item=m_treeLayers.GetNextItem(hChild,TVGN_NEXT);  
+				m_treeLayers.DeleteItem(hChild);
+				hChild=item;
+			}  
+		}
+		for (list<COsgSceneFile*>::iterator it=files->begin();it!=files->end();it++)
+		{
+			HTREEITEM item=m_treeLayers.InsertItem((*it)->AliasName(),hRoot);
+			m_treeLayers.SetItemData(item,(DWORD_PTR)(*it));
+		}
+		m_treeLayers.Expand(hRoot,TVE_EXPAND);
 	}
 	else
 	{
-
+		m_treeLayers.DeleteAllItems();
 	}
 }
