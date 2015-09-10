@@ -1,6 +1,6 @@
 #pragma once
 #include "OsgScene.h"
-#include "MFC_OSG.h"
+#include "OsgRender.h"
 
 
 // CD3WindowDlg ¶Ô»°¿ò
@@ -22,11 +22,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 private:
 	COsgScene* m_osgScene;
-	cOSG* m_osg;
+	COsgRender* m_osgRender;
 	CRenderingThread* m_thread;
 public:
 	COsgScene* OsgScene() const { return m_osgScene; }
 	void OsgScene(COsgScene* val) { m_osgScene = val; }
-	void InitOsg();
+	BOOL StartRender();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 };

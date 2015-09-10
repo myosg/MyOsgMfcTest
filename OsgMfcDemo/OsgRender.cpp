@@ -1,15 +1,15 @@
-// MFC_OSG.cpp : implementation of the cOSG class
+// COsgRender.cpp : implementation of the COsgRender class
 //
 #include "stdafx.h"
-#include "MFC_OSG.h"
+#include "OsgRender.h"
 
 
-cOSG::cOSG(HWND hWnd) :
+COsgRender::COsgRender(HWND hWnd) :
    m_hWnd(hWnd)
 {
 }
 
-cOSG::~cOSG()
+COsgRender::~COsgRender()
 {
     mViewer->setDone(true);
     Sleep(1000);
@@ -18,7 +18,7 @@ cOSG::~cOSG()
     delete mViewer;
 }
 
-void cOSG::InitOSG(std::string modelname)
+void COsgRender::InitOSG()
 {
     // Store the name of the model to load
     m_ModelName = modelname;
@@ -29,7 +29,7 @@ void cOSG::InitOSG(std::string modelname)
     InitCameraConfig();
 }
 
-void cOSG::InitManipulators(void)
+void COsgRender::InitManipulators(void)
 {
     // Create a trackball manipulator
     trackball = new osgGA::TrackballManipulator();
@@ -45,7 +45,7 @@ void cOSG::InitManipulators(void)
 }
 
 
-void cOSG::InitSceneGraph(void)
+void COsgRender::InitSceneGraph(void)
 {
     // Init the main Root Node/Group
     mRoot  = new osg::Group;
@@ -63,7 +63,7 @@ void cOSG::InitSceneGraph(void)
     mRoot->addChild(mModel.get());
 }
 
-void cOSG::InitCameraConfig(void)
+void COsgRender::InitCameraConfig(void)
 {
     // Local Variable to hold window size data
     RECT rect;
@@ -132,12 +132,12 @@ void cOSG::InitCameraConfig(void)
     mViewer->getCamera()->setProjectionMatrixAsPerspective(fovy,aspectRatio,z1,z2);*/
 }
 
-void cOSG::PreFrameUpdate()
+void COsgRender::PreFrameUpdate()
 {
     // Due any preframe updates in this routine
 }
 
-void cOSG::PostFrameUpdate()
+void COsgRender::PostFrameUpdate()
 {
     // Due any postframe updates in this routine
 }
@@ -169,7 +169,7 @@ void cOSG::PostFrameUpdate()
     _endthread();
 }*/
 
-CRenderingThread::CRenderingThread( cOSG* ptr )
+CRenderingThread::CRenderingThread( COsgRender* ptr )
 :   OpenThreads::Thread(), _ptr(ptr), _done(false)
 {
 }
@@ -198,5 +198,6 @@ void CRenderingThread::run()
         _ptr->PreFrameUpdate();
         viewer->frame();
         _ptr->PostFrameUpdate();
+		this->microSleep(100);
     } while ( !testCancel() && !viewer->done() && !_done );
 }

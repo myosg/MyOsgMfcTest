@@ -5,6 +5,7 @@
 #include "OsgMfcDemo.h"
 #include "D3WindowDlg.h"
 #include "afxdialogex.h"
+#include "Common.h"
 
 
 // CD3WindowDlg 对话框
@@ -15,6 +16,7 @@ CD3WindowDlg::CD3WindowDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CD3WindowDlg::IDD, pParent)
 {
 	this->SetBackgroundColor(RGB(255,255,255));
+	m_osgRender=NULL;
 }
 
 CD3WindowDlg::~CD3WindowDlg()
@@ -31,18 +33,28 @@ BEGIN_MESSAGE_MAP(CD3WindowDlg, CDialogEx)
 	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
-void CD3WindowDlg::InitOsg()
+BOOL CD3WindowDlg::StartRender()
 {
-	
+	if (m_hWnd==NULL)
+	{
+		return FALSE;
+	}
+	if (m_osgRender)
+	{
+		return TRUE;
+	}
+	m_osgRender=new COsgRender(m_hWnd);
+
 	list<COsgSceneFile*>::iterator it=m_osgScene->OsgSceneFileList()->begin();
 	COsgSceneFile* f=(*it);
 
-	char *chr=new char[f->OsgFile()->FilePathName().GetLength()+1];
-	WideCharToMultiByte(CP_ACP,0,f->OsgFile()->FilePathName().GetBuffer(),-1,chr,f->OsgFile()->FilePathName().GetLength()+1,NULL,NULL);
+	string str;
+	ToString(f->OsgFile()->FilePathName(),str);
 
-	m_osg->InitOSG(chr);
-	m_thread = new CRenderingThread(m_osg);
+	m_osgRender->InitOSG(str);
+	m_thread = new CRenderingThread(m_osgRender);
 	m_thread->start();
+	return TRUE;
 }
 
 
@@ -55,6 +67,5 @@ int CD3WindowDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	// TODO:  在此添加您专用的创建代码
-	m_osg=new cOSG(m_hWnd);
 	return 0;
 }

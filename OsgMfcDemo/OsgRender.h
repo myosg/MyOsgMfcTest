@@ -11,11 +11,11 @@
 #include <osgUtil/Optimizer>
 #include <string>
 
-class cOSG
+class COsgRender
 {
 public:
-    cOSG(HWND hWnd);
-    ~cOSG();
+    COsgRender(HWND hWnd);
+    ~COsgRender();
 
     void InitOSG(std::string filename);
     void InitManipulators(void);
@@ -45,12 +45,12 @@ private:
 class CRenderingThread : public OpenThreads::Thread
 {
 public:
-    CRenderingThread( cOSG* ptr );
+    CRenderingThread( COsgRender* ptr );
     virtual ~CRenderingThread();
 
     virtual void run();
 
 protected:
-    cOSG* _ptr;
+    COsgRender* _ptr;
     bool _done;
 };

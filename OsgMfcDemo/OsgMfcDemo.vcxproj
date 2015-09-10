@@ -105,12 +105,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Common.h" />
     <ClInclude Include="D3WindowDlg.h" />
     <ClInclude Include="D3WindowsDlg.h" />
     <ClInclude Include="FileSourceDlg.h" />
     <ClInclude Include="GroupSize.h" />
     <ClInclude Include="ICollection.h" />
-    <ClInclude Include="MFC_OSG.h" />
+    <ClInclude Include="OsgRender.h" />
     <ClInclude Include="OsgFile.h" />
     <ClInclude Include="OsgFileSource.h" />
     <ClInclude Include="OsgManager.h" />
@@ -126,11 +127,12 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Common.cpp" />
     <ClCompile Include="D3WindowDlg.cpp" />
     <ClCompile Include="D3WindowsDlg.cpp" />
     <ClCompile Include="FileSourceDlg.cpp" />
     <ClCompile Include="ICollection.cpp" />
-    <ClCompile Include="MFC_OSG.cpp" />
+    <ClCompile Include="OsgRender.cpp" />
     <ClCompile Include="OsgFile.cpp" />
     <ClCompile Include="OsgFileSource.cpp" />
     <ClCompile Include="OsgManager.cpp" />
