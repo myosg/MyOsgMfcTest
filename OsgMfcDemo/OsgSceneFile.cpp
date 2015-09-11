@@ -30,7 +30,7 @@ CString COsgSceneFile::AliasName()
 	}
 }
 
-osg::Node* COsgSceneFile::DoReadOsgFile()
+osg::ref_ptr<osg::Node> COsgSceneFile::DoReadOsgFile()
 {
 	if (m_osgFile&&m_osgNode==NULL)
 	{
@@ -41,7 +41,7 @@ osg::Node* COsgSceneFile::DoReadOsgFile()
 	return m_osgNode;
 }
 
-osg::Node* COsgSceneFile::OsgNode()
+osg::ref_ptr<osg::Node> COsgSceneFile::OsgNode()
 {
 	if (!m_osgNode)
 	{
