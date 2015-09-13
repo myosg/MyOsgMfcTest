@@ -163,8 +163,8 @@ void CFileSourceDlg::OnAddCurScene()
 			COsgFile* osgFile = (COsgFile*)m_treeSource.GetItemData(hItem);
 			COsgSceneFile* sceneFile=new COsgSceneFile(osgFile);
 			dlg->OsgScene()->AddOsgSceneFile(sceneFile);
+			dlg->Refresh(sceneFile);
 			m_osgManager->SceneLayersDlg()->Refresh();
-			dlg->InitOsg();
 		}
 	}
 }

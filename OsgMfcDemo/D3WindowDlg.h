@@ -23,10 +23,11 @@ protected:
 private:
 	COsgScene* m_osgScene;
 	COsgRender* m_osgRender;
-	CRenderingThread* m_thread;
+    BOOL StartRender();
 public:
 	COsgScene* OsgScene() const { return m_osgScene; }
 	void OsgScene(COsgScene* val) { m_osgScene = val; }
-	BOOL StartRender();
+	void Refresh();//刷新整个场景
+	void Refresh(COsgSceneFile*scenefile);//刷新指定图层
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 };

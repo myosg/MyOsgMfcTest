@@ -9,17 +9,23 @@
 #include <osgDB/Registry>
 #include <osgDB/ReadFile>
 #include <osgUtil/Optimizer>
+#include <osg/Group>
 #include <string>
-
+class CRenderingThread;
 class COsgRender
 {
+private:
+	CRenderingThread* m_thread;
 public:
     COsgRender(HWND hWnd);
     ~COsgRender();
 
-    void InitOSG(std::string filename);
+    void InitOSG();
+	int StartGrahics();
+	void RefreshGrahics();
     void InitManipulators(void);
-    void InitSceneGraph(void);
+    void AddNode(osg::ref_ptr<osg::Node> node);
+	void RemoveNode(osg::ref_ptr<osg::Node> node);
     void InitCameraConfig(void);
     void SetupWindow(void);
     void SetupCamera(void);
@@ -37,7 +43,7 @@ private:
     HWND m_hWnd;
     osgViewer::Viewer* mViewer;
     osg::ref_ptr<osg::Group> mRoot;
-    osg::ref_ptr<osg::Node> mModel;
+    //osg::ref_ptr<osg::Node> mModel;
     osg::ref_ptr<osgGA::TrackballManipulator> trackball;
     osg::ref_ptr<osgGA::KeySwitchMatrixManipulator> keyswitchManipulator;
 };

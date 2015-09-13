@@ -1,12 +1,10 @@
 #pragma once
 #include <list>
 #include "OsgSceneFile.h"
-#include "osg\Group"
 using namespace std;
 class COsgScene
 {
 private:
-	osg::ref_ptr<osg::Group> m_osgGroup;//场景节点集合
 	list<COsgSceneFile*>* m_osgSceneFileList;//文件列表
 	BOOL m_isNew;//是否是新建（未命名）
 	BOOL m_isSaved;//是否已保存

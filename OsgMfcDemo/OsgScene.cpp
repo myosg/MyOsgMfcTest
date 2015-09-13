@@ -19,22 +19,29 @@ void COsgScene::DoInitOsgScene(CString name, BOOL isNew)
 	m_isNew = isNew;
 	if(name.Trim().Compare(_T("")) == 0)
 	{
-		m_Name = "新建场景";
-		m_Name.Format(_T("新建场景%d"), NEW_COUNT++);
+		name = "新建场景";
+		name.Format(_T("新建场景%d"), NEW_COUNT++);
 	}
 	m_Name = name;
-	m_osgGroup=new osg::Group();
 }
 COsgScene::~COsgScene(void)
 {
-	for(list<COsgSceneFile*>::iterator it = m_osgSceneFileList->begin(); it != m_osgSceneFileList->end(); it++)
+	if (m_osgSceneFileList)
 	{
-		delete(*it);
+		list<COsgSceneFile*>::iterator it = m_osgSceneFileList->begin();
+		while (it!=m_osgSceneFileList->end())
+		{
+			COsgSceneFile*t=*it;
+			it = m_osgSceneFileList->erase(it);
+			delete t;
+		}
+		delete m_osgSceneFileList;
+		m_osgSceneFileList=NULL;
 	}
-	delete m_osgSceneFileList;
 }
 
 void COsgScene::AddOsgSceneFile(COsgSceneFile *osgFile)
 {
 	m_osgSceneFileList->push_back(osgFile);
 
+}
