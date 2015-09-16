@@ -99,12 +99,11 @@ BOOL CMFCTestCodeDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	osgViewer::Viewer viewer;
-	osg::ref_ptr<osg::Node> n(osgDB::readNodeFile("glider.osg"));
-	viewer.setSceneData(n.get());
-	viewer.realize();
-	viewer.run();
-	n.release();
+	osg::ref_ptr<osgViewer::Viewer> viewer=new osgViewer::Viewer();
+	osg::ref_ptr<osg::Node> n=osgDB::readNodeFile("glider.osg");
+	viewer->setSceneData(n.get());
+	viewer->realize();
+	viewer->run();
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
