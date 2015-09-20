@@ -4,37 +4,34 @@
 #include "OsgRender.h"
 
 COsgRender::COsgRender(HWND hWnd) :
-   m_hWnd(hWnd)
+    m_hWnd(hWnd)
 {
-	mRoot=NULL;
-	m_thread=NULL;
-	mViewer=NULL;
+    mRoot=NULL;
+    m_thread=NULL;
+    mViewer=NULL;
 }
 
 COsgRender::~COsgRender()
 {
-	if (mRoot)
+    if (mViewer)
+    {
+        mViewer->setDone(true);
+        Sleep(1000);
+        mViewer->stopThreading();
+        delete mViewer;
+    }
+	if (m_thread)
 	{
-		mRoot->removeChildren(0,mRoot->getNumChildren());
-	}
-	
-	if (mViewer)
-	{
-		mViewer->setDone(true);
-		Sleep(1000);
-		mViewer->stopThreading();		
-		delete mViewer;
+		delete m_thread;
 	}
 }
 
 void COsgRender::InitOSG()
 {
-	return;
+    //return;
     // Store the name of the model to load
-	if (mRoot)
-	{
-		return;
-	}
+    if (mRoot)
+        return;
     mRoot=new osg::Group();
     // Init different parts of OSG
     InitManipulators();
@@ -60,35 +57,21 @@ void COsgRender::InitManipulators(void)
 
 void COsgRender::AddNode(osg::ref_ptr<osg::Node> node)
 {
-	if (!mRoot)
-	{
-		return;
-	}
-	
-    // Init the main Root Node/Group
-    //mRoot  = new osg::Group;
-
-    // Load the Model from the model name
-    //mModel = osgDB::readNodeFile(m_ModelName);
-    //if (!mModel) return;
-
+    if (!mRoot)
+        return;
     // Optimize the model
     osgUtil::Optimizer optimizer;
     optimizer.optimize(node.get());
     optimizer.reset();
     // Add the model to the scene
-	if (!mRoot->containsNode(node.get()))
-	{
-		mRoot->addChild(node.get());
-	}
+    if (!mRoot->containsNode(node.get()))
+        mRoot->addChild(node.get());
 }
 
 void COsgRender::RemoveNode( osg::ref_ptr<osg::Node> node )
 {
-	if (mRoot)
-	{
-		mRoot->removeChild(node.get());
-	}
+    if (mRoot)
+        mRoot->removeChild(node.get());
 }
 
 void COsgRender::InitCameraConfig(void)
@@ -107,10 +90,10 @@ void COsgRender::InitCameraConfig(void)
 
     // Init the Windata Variable that holds the handle for the Window to display OSG in.
     osg::ref_ptr<osg::Referenced> windata = new osgViewer::GraphicsWindowWin32::WindowData(m_hWnd);
-	//traits->x = 0;
-	//traits->y = 0;
-	//traits->width = rect.right - rect.left;
-	//traits->height = rect.bottom - rect.top;
+    traits->x = 0;
+    traits->y = 0;
+    traits->width = rect.right - rect.left;
+    traits->height = rect.bottom - rect.top;
     // Setup the traits parameters
     traits->windowDecoration = false;
     traits->doubleBuffer = true;
@@ -119,23 +102,23 @@ void COsgRender::InitCameraConfig(void)
     traits->inheritedWindowData = windata;
 
     // Create the Graphics Context
-    osg::GraphicsContext* gc = osg::GraphicsContext::createGraphicsContext(traits.get());
+    osg::ref_ptr<osg::GraphicsContext> gc = osg::GraphicsContext::createGraphicsContext(traits.get());
 
     // Init Master Camera for this View
     osg::ref_ptr<osg::Camera> camera = mViewer->getCamera();
 
     // Assign Graphics Context to the Camera
-    camera->setGraphicsContext(gc);
+    camera->setGraphicsContext(gc.get());
 
     // Set the viewport for the Camera
     //camera->setViewport(new osg::Viewport(traits->x, traits->y, traits->width, traits->height));
-	camera->setViewport(new osg::Viewport(0, 0, rect.right - rect.left, rect.bottom - rect.top));
+    camera->setViewport(new osg::Viewport(0, 0, rect.right - rect.left, rect.bottom - rect.top));
 
     // Set projection matrix and camera attribtues
     camera->setClearMask(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     camera->setClearColor(osg::Vec4f(0.2f, 0.2f, 0.4f, 1.0f));
-     camera->setProjectionMatrixAsPerspective(
-         30.0f, static_cast<double>(traits->width)/static_cast<double>(traits->height), 1.0, 1000.0);
+    camera->setProjectionMatrixAsPerspective(
+        30.0f, static_cast<double>(traits->width)/static_cast<double>(traits->height), 1.0, 1000.0);
     // Add the Camera to the Viewer
     //mViewer->addSlave(camera.get());
     mViewer->setCamera(camera.get());
@@ -146,8 +129,8 @@ void COsgRender::InitCameraConfig(void)
     // Set the Scene Data
     mViewer->setSceneData(mRoot.get());
 
-	// Add a Stats Handler to the viewer
-	mViewer->addEventHandler(new osgViewer::StatsHandler);
+    // Add a Stats Handler to the viewer
+    mViewer->addEventHandler(new osgViewer::StatsHandler);
 
     // Realize the Viewer
     mViewer->realize();
@@ -172,31 +155,27 @@ void COsgRender::PostFrameUpdate()
 
 int COsgRender::StartGrahics()
 {
-	if (!mRoot||!mViewer)
-	{
-		return -1;
-	}
-	
-	if (!m_thread)
-	{
-		m_thread = new CRenderingThread(this);
-		int i= m_thread->start();
-		if (i!=0)
-		{
-			delete m_thread;
-			m_thread=NULL;
-		}
-		return i;
-	}
-	return 0;
+    if (!mRoot||!mViewer)
+        return -1;
+
+    if (!m_thread)
+    {
+        m_thread = new CRenderingThread(this);
+        int i= m_thread->start();
+        if (i!=0)
+        {
+            delete m_thread;
+            m_thread=NULL;
+        }
+        return i;
+    }
+    return 0;
 }
 
 void COsgRender::RefreshGrahics()
 {
-	if (mViewer)
-	{
-		mViewer->setSceneData(mRoot.get());
-	}
+    if (mViewer)
+        mViewer->setSceneData(mRoot.get());
 }
 
 
@@ -229,8 +208,8 @@ void COsgRender::RefreshGrahics()
     _endthread();
 }*/
 
-CRenderingThread::CRenderingThread( COsgRender* ptr )
-:   OpenThreads::Thread(), _ptr(ptr), _done(false)
+CRenderingThread::CRenderingThread( COsgRender *ptr )
+    :   OpenThreads::Thread(), _ptr(ptr), _done(false)
 {
 }
 
@@ -252,12 +231,13 @@ void CRenderingThread::run()
         return;
     }
 
-    osgViewer::Viewer* viewer = _ptr->getViewer();
+    osgViewer::Viewer *viewer = _ptr->getViewer();
     do
     {
         _ptr->PreFrameUpdate();
         viewer->frame();
         _ptr->PostFrameUpdate();
-		this->microSleep(100);
-    } while ( !testCancel() && !viewer->done() && !_done );
+        this->microSleep(100);
+    }
+    while ( !testCancel() && !viewer->done() && !_done );
 }

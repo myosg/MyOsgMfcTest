@@ -56,7 +56,13 @@ int CD3WindowsDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDialogEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
-
+	RECT rect;
+	rect.left=0;
+	rect.top=0;
+	rect.right=100;
+	rect.bottom=100;
+	m_tab3DWinCtrl.Create(WS_CHILDWINDOW,rect,this,IDC_TAB_3DWINS);
+	m_tab3DWinCtrl.ShowWindow(SW_SHOW);
 	// TODO:  在此添加您专用的创建代码
 	m_d3WindowList.clear();
 	return 0;

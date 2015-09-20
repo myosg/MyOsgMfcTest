@@ -16,11 +16,6 @@ COsgSceneFile::COsgSceneFile(COsgFile*osgFile):
 
 COsgSceneFile::~COsgSceneFile(void)
 {
-	if (m_osgNode)
-	{
-		osg::Node* node=m_osgNode.release();
-		node->releaseGLObjects();
-	}
 }
 
 CString COsgSceneFile::AliasName()

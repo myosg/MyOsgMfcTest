@@ -4,6 +4,7 @@
 #include "D3WindowDlg.h"
 #include "OsgScene.h"
 #include "OsgManager.h"
+#include "TabCtrlEx.h"
 using namespace std;
 
 // CD3WindowsDlg ¶Ô»°¿ò
@@ -42,7 +43,7 @@ public:
 	void Refresh();
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	CTabCtrl m_tab3DWinCtrl;
+	CTabCtrlEx m_tab3DWinCtrl;
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	afx_msg void OnTcnSelchangeTab3dwins(NMHDR *pNMHDR, LRESULT *pResult);
