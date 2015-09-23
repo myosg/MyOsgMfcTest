@@ -80,7 +80,7 @@ void CD3WindowDlg::Refresh()
 		{
 			m_osgRender->AddNode((*it)->OsgNode());
 		}
-		m_osgRender->RefreshGrahics();
+		//m_osgRender->RefreshGrahics();
 	}
 }
 
@@ -89,6 +89,6 @@ void CD3WindowDlg::Refresh( COsgSceneFile*scenefile )
 	if (m_osgRender)
 	{
 		m_osgRender->AddNode(scenefile->OsgNode());
-		m_osgRender->RefreshGrahics();
+		//m_osgRender->RefreshGrahics();
 	}
 }

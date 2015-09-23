@@ -61,7 +61,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\OSG\OpenSceneGraph\lib;D:\OSG\3rdParty\x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>mfc110d.lib;MFCM110d.lib;osgViewerd.lib;osgTextd.lib;opengl32.lib;osgGAd.lib;osgDBd.lib;zlibd.lib;osgUtild.lib;osgd.lib;OpenThreadsd.lib</AdditionalDependencies>
+      <AdditionalDependencies>mfc110d.lib;MFCM110d.lib;osgViewerd.lib;osgTextd.lib;opengl32.lib;osgGAd.lib;osgDBd.lib;zlibd.lib;osgUtild.lib;osgd.lib;OpenThreadsd.lib;osgFXd.lib</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
     </Link>
@@ -122,6 +122,7 @@
     <ClInclude Include="OsgMfcDemoDlg.h" />
     <ClInclude Include="OsgSceneCollection.h" />
     <ClInclude Include="OsgSceneFile.h" />
+    <ClInclude Include="PickEventHandle.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SceneLayersDlg.h" />
     <ClInclude Include="ScenesDlg.h" />
@@ -144,6 +145,7 @@
     <ClCompile Include="OsgMfcDemoDlg.cpp" />
     <ClCompile Include="OsgSceneCollection.cpp" />
     <ClCompile Include="OsgSceneFile.cpp" />
+    <ClCompile Include="PickEventHandle.cpp" />
     <ClCompile Include="SceneLayersDlg.cpp" />
     <ClCompile Include="ScenesDlg.cpp" />
     <ClCompile Include="stdafx.cpp">

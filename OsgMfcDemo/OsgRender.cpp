@@ -2,6 +2,7 @@
 //
 #include "stdafx.h"
 #include "OsgRender.h"
+#include "PickEventHandle.h"
 
 COsgRender::COsgRender(HWND hWnd) :
     m_hWnd(hWnd)
@@ -13,17 +14,18 @@ COsgRender::COsgRender(HWND hWnd) :
 
 COsgRender::~COsgRender()
 {
-    if (mViewer)
-    {
-        mViewer->setDone(true);
-        Sleep(1000);
-        mViewer->stopThreading();
-        delete mViewer;
-    }
 	if (m_thread)
 	{
 		delete m_thread;
+		Sleep(500);
 	}
+    if (mViewer)
+    {
+        mViewer->setDone(true);
+		Sleep(500);
+        mViewer->stopThreading();
+        delete mViewer;
+    }
 }
 
 void COsgRender::InitOSG()
@@ -52,26 +54,6 @@ void COsgRender::InitManipulators(void)
 
     // Init the switcher to the first manipulator (in this case the only manipulator)
     keyswitchManipulator->selectMatrixManipulator(0);  // Zero based index Value
-}
-
-
-void COsgRender::AddNode(osg::ref_ptr<osg::Node> node)
-{
-    if (!mRoot)
-        return;
-    // Optimize the model
-    osgUtil::Optimizer optimizer;
-    optimizer.optimize(node.get());
-    optimizer.reset();
-    // Add the model to the scene
-    if (!mRoot->containsNode(node.get()))
-        mRoot->addChild(node.get());
-}
-
-void COsgRender::RemoveNode( osg::ref_ptr<osg::Node> node )
-{
-    if (mRoot)
-        mRoot->removeChild(node.get());
 }
 
 void COsgRender::InitCameraConfig(void)
@@ -131,7 +113,7 @@ void COsgRender::InitCameraConfig(void)
 
     // Add a Stats Handler to the viewer
     mViewer->addEventHandler(new osgViewer::StatsHandler);
-
+	mViewer->addEventHandler(new CPickEventHandle());
     // Realize the Viewer
     mViewer->realize();
 
@@ -140,6 +122,25 @@ void COsgRender::InitCameraConfig(void)
     mViewer->getCamera()->getProjectionMatrixAsPerspective(fovy,aspectRatio,z1,z2);
     aspectRatio=double(traits->width)/double(traits->height);
     mViewer->getCamera()->setProjectionMatrixAsPerspective(fovy,aspectRatio,z1,z2);*/
+}
+
+void COsgRender::AddNode(osg::ref_ptr<osg::Node> node)
+{
+    if (!mRoot)
+        return;
+    // Optimize the model
+    osgUtil::Optimizer optimizer;
+    optimizer.optimize(node.get());
+    optimizer.reset();
+    // Add the model to the scene
+    if (!mRoot->containsNode(node.get()))
+        mRoot->addChild(node.get());
+}
+
+void COsgRender::RemoveNode( osg::ref_ptr<osg::Node> node )
+{
+    if (mRoot)
+        mRoot->removeChild(node.get());
 }
 
 
@@ -175,7 +176,9 @@ int COsgRender::StartGrahics()
 void COsgRender::RefreshGrahics()
 {
     if (mViewer)
+	{
         mViewer->setSceneData(mRoot.get());
+	}
 }
 
 

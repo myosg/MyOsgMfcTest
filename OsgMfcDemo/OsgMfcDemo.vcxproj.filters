@@ -81,6 +81,9 @@
     <ClInclude Include="TabCtrlEx.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="PickEventHandle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OsgMfcDemo.cpp">
@@ -135,6 +138,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="TabCtrlEx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PickEventHandle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
